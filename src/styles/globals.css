@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+@layer components {
+  .nav {}
+
+  .nav-icon {
+    @apply w-8 h-8 group-hover:w-16 group-hover:h-16 flex-none
+    transition-all
+  }
+
+  .nav button {
+    @apply relative flex flex-row items-center justify-start
+    transition-colors rounded-xl p-2 space-x-4
+    w-full h-20 hover:bg-gray-700/30 overflow-hidden
+  }
+
+  .nav-p {
+    @apply flex-none invisible group-hover:visible whitespace-nowrap
+    text-xl font-bold
+  }
+}
+

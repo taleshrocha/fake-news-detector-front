@@ -20,7 +20,7 @@ export default function TextInput() {
             group-hover:translate-y-0 group-hover:translate-x-0
            "
       >
-        <PlaneIcon size={100} className="text-emerald-600 " />
+        <PlaneIcon size={100} className="text-emerald-700 " />
       </button>
     </div>
   );

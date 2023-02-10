@@ -16,16 +16,19 @@ export default function Home() {
       <main
         className="
         flex justify-center items-center
-        w-full h-full min-h-screen min-w-screen
-        bg-gray-900
+        w-screen h-screen
+        bg-gray-900 py-4
         "
       >
         <NavBar />
 
-        <h1 className="text-6xl text-gray-50">Fake News Detector</h1>
+        <div className="flex flex-col justify-center items-center 
+          w-full h-full px-20 space-y-8">
+          <h1 className="text-6xl text-gray-50">Fake News Detector</h1>
 
-        <TextInput />
-        <Table />
+          <TextInput />
+          <Table />
+        </div>
       </main>
     </>
   );
