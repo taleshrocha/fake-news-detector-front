@@ -1,4 +1,7 @@
-import { AiFillEye as EyeIcon,AiFillQuestionCircle as QuestionIcon  } from "react-icons/ai";
+import { AiFillEye as EyeIcon,
+  AiFillQuestionCircle as QuestionIcon,
+  AiFillSetting as SettingsIcon
+} from "react-icons/ai";
 import { BsGithub as GitHubIcon } from "react-icons/bs";
 import { FaFileCsv as CsvFileIcon } from "react-icons/fa";
 
@@ -25,6 +28,10 @@ export default function NavBar() {
         <button>
           <EyeIcon className="nav-icon" size={100} />
             <p className="nav-p">See news</p>
+        </button>
+        <button>
+          <SettingsIcon className="nav-icon" size={100} />
+            <p className="nav-p">Settings</p>
         </button>
         <button>
           <QuestionIcon className="nav-icon" size={100} />
