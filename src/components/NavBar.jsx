@@ -10,6 +10,7 @@ export default function NavBar() {
       left-0 z-50
       h-screen w-16 hover:w-60
       bg-black/30 backdrop-blur-sm text-white
+      hover:delay-500
       transition-all duration-300 py-6 px-2
       "
     >
