@@ -3,8 +3,12 @@ import NavBar from "@/components/NavBar.jsx";
 import TextInput from "@/components/TextInput.jsx";
 import Table from "@/components/Table";
 import Slider from "@/components/Slider";
+import { allNews } from "@/pages/data.js";
+
+import { NewsProvider } from "@/contexts/NewsContext";
 
 export default function Home() {
+  //const allNews = data._embedded.newsList
   return (
     <>
       <Head>
@@ -23,15 +27,30 @@ export default function Home() {
       >
         <NavBar />
 
-        <div className="flex flex-col justify-center items-center 
-          w-full h-full px-20 space-y-8">
+        <div
+          className="flex flex-col justify-center items-center 
+          w-full h-full px-20 space-y-8"
+        >
           <h1 className="text-6xl text-gray-50">Fake News Detector</h1>
 
           <TextInput />
-          <Slider />
-          <Table />
+          <NewsProvider>
+            <Slider />
+            <Table data={allNews}/>
+          </NewsProvider>
         </div>
       </main>
     </>
   );
 }
+
+//export async function getServerSideProps() {
+//  const res = await fetch("http://localhost:8080/news");
+//  const data = res.json();
+//
+//  return {
+//    props: {
+//      data: await data,
+//    },
+//  };
+//}
