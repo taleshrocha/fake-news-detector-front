@@ -2,6 +2,7 @@ import Head from "next/head";
 import NavBar from "@/components/NavBar.jsx";
 import TextInput from "@/components/TextInput.jsx";
 import Table from "@/components/Table";
+import Slider from "@/components/Slider";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
           <h1 className="text-6xl text-gray-50">Fake News Detector</h1>
 
           <TextInput />
+          <Slider />
           <Table />
         </div>
       </main>
