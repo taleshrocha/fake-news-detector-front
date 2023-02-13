@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 export default function Table({ data }) {
   const { trustThreshold } = useContext(NewsContext);
   return (
-    <div className="overflow-y-scroll rounded-lg border-4 border-gray-800 h-full">
+    <div className="flex flex-col overflow-y-scroll rounded-lg border-4 border-gray-800 h-full">
       <table className="table-fixed text-center w-full h-full text-white">
         <thead>
           <tr className="bg-gray-800">
@@ -36,8 +36,11 @@ export default function Table({ data }) {
               >
                 {news.fakeRate * 100 < trustThreshold ? "True" : "Fake"}
               </td>
-              <td className="table-cell">
-                <CheckBox marked={false} />
+              <td className="">
+                  <input
+                    type="checkbox"
+                    className=""
+                  />
               </td>
             </tr>
           ))}
@@ -50,8 +53,12 @@ export default function Table({ data }) {
 function CheckBox({ marked }) {
   const [isMarked, setIsMarked] = useState(marked);
 
-  return <button 
-    className="text-center h-5 w-5 bg-white text-black"
-    onClick={() => setIsMarked(!isMarked)}
-  >{isMarked? "X" : "."}</button>;
+  return (
+    <button
+      className="text-center h-5 w-5 bg-white text-black"
+      onClick={() => setIsMarked(!isMarked)}
+    >
+      {isMarked ? "X" : "."}
+    </button>
+  );
 }
