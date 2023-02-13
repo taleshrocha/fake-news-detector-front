@@ -1,8 +1,10 @@
 import { NewsContext } from "@/contexts/NewsContext";
+import { allNews } from "@/pages/data";
 import { useContext, useState } from "react";
 
 export default function Table({ data }) {
   const { trustThreshold } = useContext(NewsContext);
+
   return (
     <div className="flex flex-col overflow-y-scroll rounded-lg border-4 border-gray-800 h-full">
       <table className="table-fixed text-center w-full h-full text-white">
