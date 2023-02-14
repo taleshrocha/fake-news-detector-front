@@ -3,7 +3,8 @@ import { useContext, useState } from "react";
 
 export default function Slider() {
   const [value, setValue] = useState(70);
-  const { setTrustThreshold } = useContext(NewsContext);
+  const { setTrustThreshold, algoValues, setAlgoValues } = useContext(NewsContext);
+
   return (
     <div className="flex flex-col font-bold text-white w-full">
       <h1>Trust threshold: {value}%</h1>
@@ -27,6 +28,27 @@ export default function Slider() {
         >
           Set
         </button>
+      </div>
+      <div className="flex space-x-4 justify-center items-center">
+        {algoValues.map((value, index) => (
+          <div 
+            key={index}
+            className="flex flex-col justify-center items-center">
+            <input
+              className="rounded-full bg-gray-700 text-emerald-700 !outline-none !border-0 !ring-0"
+              type="checkbox"
+              onChange={(e) => {
+                let newValues = [...algoValues];
+                newValues[index].selected = e.target.checked;
+                setAlgoValues(newValues);
+              }}
+              checked={value.selected}
+            />
+            <p className={`${value.selected ? "text-white" : "text-gray-500"}`}>
+              {value.algo}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );
