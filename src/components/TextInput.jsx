@@ -4,7 +4,25 @@ import { FaRegPaperPlane as PlaneIcon } from "react-icons/fa";
 export default function TextInput() {
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
   const [text, setText] = useState("");
+
+  async function postData(url = "", data = {}) {
+    const response = await fetch(url, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  }
+
   function sendNews() {
+    postData("http://localhost:8080/news/base/true", { content: text });
     if (text.trim() === "") {
     } else setText("");
   }
@@ -34,7 +52,7 @@ export default function TextInput() {
       </span>
       <textarea
         className="
-        resize-none w-full h-full text-white bg-inherit outline-none
+           resize-none w-full h-full text-white bg-inherit outline-none border-transparent focus:border-transparent focus:ring-0 
         "
         placeholder="Add your news here"
         value={text}
@@ -51,7 +69,11 @@ export default function TextInput() {
             transition-all duration-500 ease-out
             translate-y-14 translate-x-14 border-2 border-emerald-700
             hover:translate-y-0 hover:translate-x-0
-            ${(text.split(" ").length >= 8 && !isTextAreaFocused) && "!translate-y-0 !translate-x-0"}
+            ${
+              text.split(" ").length >= 8 &&
+              !isTextAreaFocused &&
+              "!translate-y-0 !translate-x-0"
+            }
 `}
         onClick={sendNews}
       >

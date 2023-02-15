@@ -1,15 +1,22 @@
 import { NewsContext } from "@/contexts/NewsContext";
 import { useContext, useEffect, useRef, useState } from "react";
 
-export default function Table({ data }) {
+export default function Table() {
   const { trustThreshold } = useContext(NewsContext);
   const [allChecked, setAllChecked] = useState(false);
   const [rateMed, setRateMed] = useState(0);
   const [trueNews, setTrueNews] = useState(0);
-  const [checkBoxValue, setCheckBoxValue] = useState(
-    Array(Object.keys(data).length).fill(false)
-  );
   const checkRef = useRef(null);
+  const [allNews, setAllNews] = useState();
+  const [checkBoxValue, setCheckBoxValue] = useState(
+    Array(allNews?.length).fill(false)
+  );
+
+  useEffect(() => {
+    fetch("http://localhost:8080/news/base/true")
+      .then((response) => response.json())
+      .then((data) => setAllNews(data))
+  }, [trustThreshold]);
 
   function allAreTrue(arr) {
     return arr.every((element) => element === true);
@@ -29,7 +36,7 @@ export default function Table({ data }) {
                 type="checkbox"
                 onChange={(e) => {
                   setCheckBoxValue(
-                    Array(Object.keys(data).length).fill(e.target.checked)
+                    Array(Object.keys(allNews).length).fill(e.target.checked)
                   );
                 }}
                 ref={checkRef}
@@ -38,7 +45,7 @@ export default function Table({ data }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((news, index) => (
+          {allNews?._embedded?.newsList.map((news, index) => (
             <tr key={news.id} className="hover:bg-gray-600">
               <td>{index + 1}</td>
               <td className="truncate">{news.content}</td>
@@ -60,7 +67,7 @@ export default function Table({ data }) {
                   onChange={(e) => {
                     let newValue = [...checkBoxValue];
                     newValue[index] = e.target.checked;
-                    checkRef.current.checked = allAreTrue(newValue)
+                    checkRef.current.checked = allAreTrue(newValue);
                     setCheckBoxValue(newValue);
                   }}
                   checked={checkBoxValue[index]}

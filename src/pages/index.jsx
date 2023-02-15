@@ -33,10 +33,10 @@ export default function Home() {
         >
           <h1 className="text-6xl text-gray-50">Fake News Detector</h1>
 
-          <TextInput />
           <NewsProvider>
+            <TextInput />
             <Slider />
-            <Table data={allNews}/>
+            <Table />
           </NewsProvider>
         </div>
       </main>
