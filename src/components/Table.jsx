@@ -1,5 +1,5 @@
 import { NewsContext } from "@/contexts/NewsContext";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 export default function Table() {
   const { trustThreshold } = useContext(NewsContext);
@@ -18,7 +18,6 @@ export default function Table() {
           setCheckBoxValue(
             Array(Object.keys(data?._embedded?.newsList).length).fill(false)
           );
-        else
         setIsLoadingData(false);
       })
       .catch((error) => {
@@ -33,14 +32,12 @@ export default function Table() {
 
   return (
     <div
-      className={`${
-        isLoadingData && "!overflow-y-hidden"
-      } relative flex flex-col overflow-y-scroll rounded-lg border-4 border-gray-800 h-full`}
+      className={`${isLoadingData && "!overflow-y-hidden"
+        } relative flex flex-col overflow-y-scroll rounded-lg border-4 border-gray-800 h-full`}
     >
       <div
-        className={`${
-          !isLoadingData && "hidden"
-        } absolute flex justify-center items-center z-10 w-full h-full bg-black/60 backdrop-blur-md`}
+        className={`${!isLoadingData && "hidden"
+          } absolute flex justify-center items-center z-10 w-full h-full `}
       >
         <svg
           className="animate-spin h-12 w-12 text-emerald-700"
@@ -67,7 +64,9 @@ export default function Table() {
           <tr className="bg-gray-800">
             <td>-</td>
             <td>Content</td>
-            <td>Fake rate</td>
+            <td>Cos</td>
+            <td>Len</td>
+            <td>Jar</td>
             <td>State</td>
             <td>
               <input
@@ -89,17 +88,18 @@ export default function Table() {
             <tr key={news.id} className="hover:bg-gray-600">
               <td>{index + 1}</td>
               <td className="truncate">{news.content}</td>
-              <td className="">{news.fakeRate}</td>
+              <td className="">{(news.cosineRate * 100).toFixed(2)}%</td>
+              <td className="">{(news.levenRate * 100).toFixed(2)}%</td>
+              <td className="">{(news.jaroRate * 100).toFixed(2)}%</td>
               <td
                 className={`
-                  font-bold ${
-                    news.fakeRate * 100 < trustThreshold
-                      ? "text-green-500"
-                      : "text-red-500"
+                  font-bold ${news.cosineRate * 100 < trustThreshold
+                    ? "text-green-500"
+                    : "text-red-500"
                   }
                 `}
               >
-                {news.fakeRate * 100 < trustThreshold ? "True" : "Fake"}
+                {news.cosineRate * 100 < trustThreshold ? "True" : "Fake"}
               </td>
               <td>
                 <input

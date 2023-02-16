@@ -5,10 +5,33 @@ export default function Slider() {
   const [value, setValue] = useState(70);
   const { setTrustThreshold, setAlgoValues } = useContext(NewsContext);
   const [buttomValues, setButtonValues] = useState([
-    { algo: "Cosine", selected: false },
-    { algo: "Leven", selected: false },
-    { algo: "Jaro", selected: false },
+    { algo: "cosine", selected: false },
+    { algo: "leven", selected: false },
+    { algo: "jaro", selected: false },
   ]);
+
+  function setNews() {
+    buttomValues.forEach((value) => {
+      if (value.selected)
+        fetch(`http://localhost:8080/news/${value.algo}`, {
+          method: "PUT",
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          redirect: "follow",
+          referrerPolicy: "no-referrer",
+        })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log("Error in sendNews()\n", error);
+          });
+    });
+  }
 
   return (
     <div className="flex flex-col font-bold text-white w-full">
@@ -29,21 +52,21 @@ export default function Slider() {
             transition-all duration-500 ease-out
             border-2 border-emerald-700
           `}
-          onClick={() => 
-            {
-              setTrustThreshold(value)
-              setAlgoValues(buttomValues)
-            }
-            }
+          onClick={() => {
+            setTrustThreshold(value);
+            setAlgoValues(buttomValues);
+            setNews();
+          }}
         >
           Set
         </button>
       </div>
       <div className="flex space-x-4 justify-center items-center">
         {buttomValues.map((value, index) => (
-          <div 
+          <div
             key={index}
-            className="flex flex-col justify-center items-center">
+            className="flex flex-col justify-center items-center"
+          >
             <input
               className="rounded-full bg-gray-700 text-emerald-700 border-transparent focus:border-transparent focus:ring-0"
               type="checkbox"

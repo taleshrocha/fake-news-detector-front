@@ -5,8 +5,13 @@ export default function TextInput() {
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
   const [text, setText] = useState("");
 
-  async function postData(url = "", data = {}) {
-    const response = await fetch(url, {
+  function sendNews() {
+    if (text.trim() === "") return;
+
+    const content = text;
+    setText("");
+
+    fetch("http://localhost:8080/news", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -16,15 +21,15 @@ export default function TextInput() {
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
-      body: JSON.stringify(data),
-    });
-    return response.json();
-  }
-
-  function sendNews() {
-    postData("http://localhost:8080/news/base/true", { content: text });
-    if (text.trim() === "") {
-    } else setText("");
+      body: JSON.stringify({ content: content }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log("Error in sendNews()\n", error);
+      });
   }
 
   return (
