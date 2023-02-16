@@ -3,27 +3,32 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 export default function Table() {
   const { trustThreshold } = useContext(NewsContext);
-  const [allChecked, setAllChecked] = useState(false);
-  const [rateMed, setRateMed] = useState(0);
-  const [trueNews, setTrueNews] = useState(0);
   const checkRef = useRef(null);
   const [allNews, setAllNews] = useState();
-  const [checkBoxValue, setCheckBoxValue] = useState(
-    Array(allNews?.length).fill(false)
-  );
+  const [checkBoxValue, setCheckBoxValue] = useState([]);
+  const [isLoadingData, setIsLoadingData] = useState(false);
 
-  useEffect(() => {
+  function getData() {
+    setIsLoadingData(true);
     fetch("http://localhost:8080/news/base/true")
       .then((response) => response.json())
-      .then((data) => setAllNews(data))
-  }, [trustThreshold]);
+      .then((data) => {
+        setAllNews(data);
+        setIsLoadingData(false);
+      })
+      .catch((error) => {
+        console.log("Can't get data: ", error);
+        setIsLoadingData(false);
+      });
+  }
 
   function allAreTrue(arr) {
     return arr.every((element) => element === true);
   }
 
   return (
-    <div className="relative flex flex-col overflow-y-scroll rounded-lg border-4 border-gray-800 h-full">
+    <div className={`${isLoadingData && "bg-red-600"} relative flex flex-col overflow-y-scroll rounded-lg border-4 border-gray-800 h-full`}>
+      <button onClick={getData}>Get Data</button>
       <table className="table-fixed text-center w-full h-full text-white">
         <thead className="sticky top-0">
           <tr className="bg-gray-800">
@@ -36,7 +41,9 @@ export default function Table() {
                 type="checkbox"
                 onChange={(e) => {
                   setCheckBoxValue(
-                    Array(Object.keys(allNews).length).fill(e.target.checked)
+                    Array(
+                      Object.keys(allNews?._embedded?.newsList).length
+                    ).fill(e.target.checked)
                   );
                 }}
                 ref={checkRef}
