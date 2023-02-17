@@ -2,7 +2,7 @@ import { NewsContext } from "@/contexts/NewsContext";
 import { useContext, useRef, useState } from "react";
 
 export default function Table() {
-  const { trustThreshold } = useContext(NewsContext);
+  const { trustThreshold, algoValues } = useContext(NewsContext);
   const checkRef = useRef(null);
   const [allNews, setAllNews] = useState();
   const [checkBoxValue, setCheckBoxValue] = useState([false]);
@@ -26,18 +26,45 @@ export default function Table() {
       });
   }
 
+  function getMed(cos, len, jar) {
+    let sum = 0;
+    let count = 0;
+    algoValues.forEach((value) => {
+      if (value.selected)
+        switch (value.algo) {
+          case "cosine":
+            sum += cos;
+            count++;
+            break;
+          case "leven":
+            sum += len;
+            count++;
+            break;
+          case "jaro":
+            sum += jar;
+            count++;
+            break;
+          default:
+            break;
+        }
+    });
+    return sum / count;
+  }
+
   function allAreTrue(arr) {
     return arr.every((element) => element === true);
   }
 
   return (
     <div
-      className={`${isLoadingData && "!overflow-y-hidden"
-        } relative flex flex-col overflow-y-scroll rounded-lg border-4 border-gray-800 h-full`}
+      className={`${
+        isLoadingData && "!overflow-y-hidden"
+      } relative flex flex-col overflow-y-scroll rounded-lg border-4 border-gray-800 h-full`}
     >
       <div
-        className={`${!isLoadingData && "hidden"
-          } absolute flex justify-center items-center z-10 w-full h-full `}
+        className={`${
+          !isLoadingData && "hidden"
+        } absolute flex justify-center items-center z-10 w-full h-full `}
       >
         <svg
           className="animate-spin h-12 w-12 text-emerald-700"
@@ -93,13 +120,17 @@ export default function Table() {
               <td className="">{(news.jaroRate * 100).toFixed(2)}%</td>
               <td
                 className={`
-                  font-bold ${news.cosineRate * 100 < trustThreshold
-                    ? "text-green-500"
-                    : "text-red-500"
+                  font-bold ${
+                    (getMed(news.cosineRate, news.levenRate, news.jaroRate)) * 100 < trustThreshold
+                      ? "text-green-500"
+                      : "text-red-500"
                   }
                 `}
               >
-                {news.cosineRate * 100 < trustThreshold ? "True" : "Fake"}
+                {(getMed(news.cosineRate, news.levenRate, news.jaroRate)) * 100 <
+                trustThreshold
+                  ? "True"
+                  : "Fake"}
               </td>
               <td>
                 <input

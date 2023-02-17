@@ -1,56 +1,34 @@
-import { useEffect, useRef, useState } from "react";
-import { FaRegPaperPlane as PlaneIcon } from "react-icons/fa";
+import { NewsContext } from "@/contexts/NewsContext";
+import { useContext, useState } from "react";
 
 export default function TextInput() {
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
   const [text, setText] = useState("");
-
-  function sendNews() {
-    if (text.trim() === "") return;
-
-    const content = text;
-    setText("");
-
-    fetch("http://localhost:8080/news", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      body: JSON.stringify({ content: content }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log("Error in sendNews()\n", error);
-      });
-  }
+  const { setNewsContent } = useContext(NewsContext);
 
   return (
     <div
       className={`
-          group relative flex flex-col w-full h-full bg-gray-900 
-          overflow-hidden
-          text-white border-4 border-gray-800 rounded-lg p-2
-          ${text.split(" ").length < 8 && isTextAreaFocused && "border-red-600"}
-      `}
+            group relative flex flex-col w-full h-full bg-gray-900 
+            overflow-hidden
+            text-white border-4 border-gray-800 rounded-lg p-2
+            ${
+              text.split(" ").length < 8 &&
+              isTextAreaFocused &&
+              "border-red-600"
+            }
+        `}
     >
       <span
         className={`
-            absolute right-48 -top-4 invisible
-            ${text.split(" ").length < 8 && isTextAreaFocused && "!visible"}
-        `}
+              absolute right-48 -top-4 invisible
+              ${text.split(" ").length < 8 && isTextAreaFocused && "!visible"}
+          `}
       >
         <span
           className={`
-              fixed text-red-500 bg-gray-900 px-2
-          `}
+                fixed text-red-500 bg-gray-900 px-2
+            `}
         >
           Add more words
         </span>
@@ -63,27 +41,12 @@ export default function TextInput() {
         value={text}
         onChange={(e) => {
           setText(e.target.value);
+          if (text.split(" ").length >= 8) setNewsContent(e.target.value);
+          else setNewsContent("");
         }}
         onFocus={() => setIsTextAreaFocused(true)}
         onBlur={() => setIsTextAreaFocused(false)}
       />
-      <button
-        className={`
-            flex items-center justify-center absolute bottom-4 right-4 w-10 h-10 
-            p-2 bg-gray-800 rounded-full
-            transition-all duration-500 ease-out
-            translate-y-14 translate-x-14 border-2 border-emerald-700
-            hover:translate-y-0 hover:translate-x-0
-            ${
-              text.split(" ").length >= 8 &&
-              !isTextAreaFocused &&
-              "!translate-y-0 !translate-x-0"
-            }
-`}
-        onClick={sendNews}
-      >
-        <PlaneIcon size={100} className="text-emerald-700 " />
-      </button>
     </div>
   );
 }

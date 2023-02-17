@@ -1,14 +1,12 @@
 import Head from "next/head";
 import NavBar from "@/components/NavBar.jsx";
 import TextInput from "@/components/TextInput.jsx";
-import Table from "@/components/Table";
 import Slider from "@/components/Slider";
-import { allNews } from "@/pages/data.js";
 
 import { NewsProvider } from "@/contexts/NewsContext";
+import Results from "@/components/Results";
 
 export default function Home() {
-  //const allNews = data._embedded.newsList
   return (
     <>
       <Head>
@@ -36,21 +34,10 @@ export default function Home() {
           <NewsProvider>
             <TextInput />
             <Slider />
-            <Table />
+            <Results />
           </NewsProvider>
         </div>
       </main>
     </>
   );
 }
-
-//export async function getServerSideProps() {
-//  const res = await fetch("http://localhost:8080/news");
-//  const data = res.json();
-//
-//  return {
-//    props: {
-//      data: await data,
-//    },
-//  };
-//}

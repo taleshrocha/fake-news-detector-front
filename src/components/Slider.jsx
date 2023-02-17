@@ -1,79 +1,37 @@
 import { NewsContext } from "@/contexts/NewsContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 export default function Slider() {
-  const [value, setValue] = useState(70);
-  const { setTrustThreshold, setAlgoValues } = useContext(NewsContext);
-  const [buttomValues, setButtonValues] = useState([
-    { algo: "cosine", selected: false },
-    { algo: "leven", selected: false },
-    { algo: "jaro", selected: false },
-  ]);
-
-  function setNews() {
-    buttomValues.forEach((value) => {
-      if (value.selected)
-        fetch(`http://localhost:8080/news/${value.algo}`, {
-          method: "PUT",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          redirect: "follow",
-          referrerPolicy: "no-referrer",
-        })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log("Error in sendNews()\n", error);
-          });
-    });
-  }
+  const { trustThreshold, setTrustThreshold, algoValues, setAlgoValues } =
+    useContext(NewsContext);
 
   return (
     <div className="flex flex-col font-bold text-white w-full">
-      <h1>Trust threshold: {value}%</h1>
-      <div className="flex space-x-2 w-full">
-        <input
-          className="flex-1 input-slider input-track input-thumb w-3/2"
-          type="range"
-          min={0}
-          max={100}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <button
-          className={`
-            flex items-center justify-center w-10 h-10 
-            p-2 bg-gray-800 rounded-full
-            transition-all duration-500 ease-out
-            border-2 border-emerald-700
-          `}
-          onClick={() => {
-            setTrustThreshold(value);
-            setAlgoValues(buttomValues);
-            setNews();
-          }}
-        >
-          Set
-        </button>
-      </div>
+      {/* Trust threshold slider */}
+      <h1>Trust threshold: {trustThreshold}%</h1>
+      <input
+        className="flex-1 input-slider input-track input-thumb w-3/2"
+        type="range"
+        min={0}
+        max={100}
+        value={trustThreshold}
+        onChange={(e) => setTrustThreshold(e.target.value)}
+      />
+      {/* Algorithms checkboxes */}
       <div className="flex space-x-4 justify-center items-center">
-        {buttomValues.map((value, index) => (
+        {algoValues.map((value, index) => (
           <div
             key={index}
             className="flex flex-col justify-center items-center"
           >
             <input
-              className="rounded-full bg-gray-700 text-emerald-700 border-transparent focus:border-transparent focus:ring-0"
+              className="rounded-full bg-gray-700 text-emerald-700
+              border-transparent focus:border-transparent focus:ring-0"
               type="checkbox"
               onChange={(e) => {
-                let newValues = [...buttomValues];
+                let newValues = [...algoValues];
                 newValues[index].selected = e.target.checked;
-                setButtonValues(newValues);
+                setAlgoValues(newValues);
               }}
               checked={value.selected}
             />
@@ -83,6 +41,7 @@ export default function Slider() {
           </div>
         ))}
       </div>
+
     </div>
   );
 }
