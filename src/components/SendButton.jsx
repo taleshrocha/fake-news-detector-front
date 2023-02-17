@@ -6,8 +6,9 @@ export default function SendButton() {
   const { newsContent, setNewsContent } = useContext(NewsContext);
 
   function postNews() {
-    if (newsContent != "")
-      setNewsContent("")
+    const content = newsContent;
+    if (content.trim().split(" ").length >= 8) {
+      setNewsContent("");
       fetch("http://localhost:8080/news", {
         method: "POST",
         mode: "cors",
@@ -27,6 +28,7 @@ export default function SendButton() {
         .catch((error) => {
           console.log("Error in sendNews()\n", error);
         });
+    }
   }
 
   function getNews() {

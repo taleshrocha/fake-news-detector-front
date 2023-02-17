@@ -3,8 +3,7 @@ import { useContext, useState } from "react";
 
 export default function TextInput() {
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
-  const [text, setText] = useState("");
-  const { setNewsContent } = useContext(NewsContext);
+  const { newsContent, setNewsContent } = useContext(NewsContext);
 
   return (
     <div
@@ -13,7 +12,7 @@ export default function TextInput() {
             overflow-hidden
             text-white border-4 border-gray-800 rounded-lg p-2
             ${
-              text.trim().split(" ").length < 8 &&
+              newsContent.trim().split(" ").length < 8 &&
               isTextAreaFocused &&
               "border-red-600"
             }
@@ -22,7 +21,11 @@ export default function TextInput() {
       <span
         className={`
               absolute right-48 -top-4 invisible
-              ${text.trim().split(" ").length < 8 && isTextAreaFocused && "!visible"}
+              ${
+                newsContent.trim().split(" ").length < 8 &&
+                isTextAreaFocused &&
+                "!visible"
+              }
           `}
       >
         <span
@@ -38,11 +41,9 @@ export default function TextInput() {
            resize-none w-full h-full text-white bg-inherit outline-none border-transparent focus:border-transparent focus:ring-0 
         "
         placeholder="Add your news here"
-        value={text}
+        value={newsContent}
         onChange={(e) => {
-          setText(e.target.value);
-          if (text.trim().split(" ").length >= 8) setNewsContent(e.target.value);
-          else setNewsContent("");
+          setNewsContent(e.target.value);
         }}
         onFocus={() => setIsTextAreaFocused(true)}
         onBlur={() => setIsTextAreaFocused(false)}
