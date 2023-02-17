@@ -2,20 +2,20 @@ import { NewsContext } from "@/contexts/NewsContext";
 import { useContext } from "react";
 
 export default function Slider() {
-  const { trustThreshold, setTrustThreshold, algoValues, setAlgoValues } =
+  const { sliderValue, setSliderValue, algoValues, setAlgoValues } =
     useContext(NewsContext);
 
   return (
     <div className="flex flex-col font-bold text-white w-full">
       {/* Trust threshold slider */}
-      <h1>Trust threshold: {trustThreshold}%</h1>
+      <h1>Trust threshold: {sliderValue}%</h1>
       <input
         className="flex-1 input-slider input-track input-thumb w-3/2"
         type="range"
         min={0}
         max={100}
-        value={trustThreshold}
-        onChange={(e) => setTrustThreshold(e.target.value)}
+        value={sliderValue}
+        onChange={(e) => setSliderValue(e.target.value)}
       />
       {/* Algorithms checkboxes */}
       <div className="flex space-x-4 justify-center items-center">

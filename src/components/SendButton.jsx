@@ -3,11 +3,13 @@ import { NewsContext } from "@/contexts/NewsContext";
 import { useContext } from "react";
 
 export default function SendButton() {
-  const { newsContent, setNewsContent } = useContext(NewsContext);
+  const { sliderValue, setTrustThreshold, setIsLoading, algoValues, setCurrentNews, newsContent, setNewsContent } = useContext(NewsContext);
+  var news = {}
 
   function postNews() {
-    const content = newsContent;
-    if (content.trim().split(" ").length >= 8) {
+    if (newsContent.trim().split(" ").length >= 8) {
+      setIsLoading(true);
+      news.content = newsContent;
       setNewsContent("");
       fetch("http://localhost:8080/news", {
         method: "POST",
@@ -19,31 +21,32 @@ export default function SendButton() {
         },
         redirect: "follow",
         referrerPolicy: "no-referrer",
-        body: JSON.stringify({ content: newsContent }),
+        body: JSON.stringify({ content: news.content }),
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          news.id = data.id
         })
+        .then(putAlgorithms)
         .catch((error) => {
-          console.log("Error in sendNews()\n", error);
+          console.log("Error in postNews()\n", error);
         });
     }
   }
 
   function getNews() {
-    setIsLoading(true);
-    fetch("http://localhost:8080/news/25")
+    fetch(`http://localhost:8080/news/${news.id}`)
       .then((response) => response.json())
       .then((data) => {
-        //setNews(data);
+        news.leven = data.levenRate
+        setCurrentNews(news)
+        setTrustThreshold(sliderValue)
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log("Error in getData()\n", error);
+        console.log("Error in getNews()\n", error);
         setIsLoading(false);
       })
-      .then(() => putAlgorithms());
   }
 
   function putAlgorithms() {
@@ -60,12 +63,9 @@ export default function SendButton() {
           redirect: "follow",
           referrerPolicy: "no-referrer",
         })
-          .then((response) => {
-            console.log(response);
-          })
-          //.them(() => getNews())
+        .then(getNews)
           .catch((error) => {
-            console.log("Error in sendNews()\n", error);
+            console.log("Error in putAlgorithms()\n", error);
           });
     });
   }
@@ -74,16 +74,19 @@ export default function SendButton() {
     <div>
       <button
         className={`
-            flex items-center justify-center w-10 h-10 
-            p-2 bg-gray-800 rounded-full
-            transition-all duration-500 ease-out
-            border-2 border-emerald-700
-          `}
-        onClick={() => {
-          postNews();
-        }}
+            flex items-center justify-center
+            p-2 bg-gray-800 rounded-md 
+            font-bold whitespace-pre
+            border-2 border-emerald-700 text-emerald-700
+            ${
+              newsContent.trim().split(" ").length < 8 &&
+              "!bg-gray-700 !text-gray-800 !border-gray-800 cursor-not-allowed"
+            }
+`}
+        onClick={postNews}
+        disabled={newsContent.trim().split(" ").length < 8}
       >
-        <PlaneIcon />
+        Check News <PlaneIcon />
       </button>
     </div>
   );
