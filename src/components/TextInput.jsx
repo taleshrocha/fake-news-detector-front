@@ -13,7 +13,7 @@ export default function TextInput() {
             overflow-hidden
             text-white border-4 border-gray-800 rounded-lg p-2
             ${
-              text.split(" ").length < 8 &&
+              text.trim().split(" ").length < 8 &&
               isTextAreaFocused &&
               "border-red-600"
             }
@@ -22,7 +22,7 @@ export default function TextInput() {
       <span
         className={`
               absolute right-48 -top-4 invisible
-              ${text.split(" ").length < 8 && isTextAreaFocused && "!visible"}
+              ${text.trim().split(" ").length < 8 && isTextAreaFocused && "!visible"}
           `}
       >
         <span
@@ -41,7 +41,7 @@ export default function TextInput() {
         value={text}
         onChange={(e) => {
           setText(e.target.value);
-          if (text.split(" ").length >= 8) setNewsContent(e.target.value);
+          if (text.trim().split(" ").length >= 8) setNewsContent(e.target.value);
           else setNewsContent("");
         }}
         onFocus={() => setIsTextAreaFocused(true)}

@@ -1,31 +1,32 @@
 import { FaRegPaperPlane as PlaneIcon } from "react-icons/fa";
 import { NewsContext } from "@/contexts/NewsContext";
-import { useContext} from "react";
+import { useContext } from "react";
 
 export default function SendButton() {
-const {newsContent, setNewsContent} =
-  useContext(NewsContext);
+  const { newsContent, setNewsContent } = useContext(NewsContext);
 
   function postNews() {
-    fetch("http://localhost:8080/news", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      body: JSON.stringify({ content: content }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+    if (newsContent != "")
+      setNewsContent("")
+      fetch("http://localhost:8080/news", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify({ content: newsContent }),
       })
-      .catch((error) => {
-        console.log("Error in sendNews()\n", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log("Error in sendNews()\n", error);
+        });
   }
 
   function getNews() {
@@ -69,22 +70,19 @@ const {newsContent, setNewsContent} =
 
   return (
     <div>
-        <button
-          className={`
+      <button
+        className={`
             flex items-center justify-center w-10 h-10 
             p-2 bg-gray-800 rounded-full
             transition-all duration-500 ease-out
             border-2 border-emerald-700
           `}
-          onClick={() => {
-            //setTrustThreshold(value);
-            //setAlgoValues(algoValues);
-            //postNews();
-            //getNews();
-          }}
-        >
+        onClick={() => {
+          postNews();
+        }}
+      >
         <PlaneIcon />
-        </button>
+      </button>
     </div>
   );
 }

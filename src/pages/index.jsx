@@ -5,6 +5,7 @@ import Slider from "@/components/Slider";
 
 import { NewsProvider } from "@/contexts/NewsContext";
 import Results from "@/components/Results";
+import SendButton from "@/components/SendButton";
 
 export default function Home() {
   return (
@@ -34,6 +35,7 @@ export default function Home() {
           <NewsProvider>
             <TextInput />
             <Slider />
+            <SendButton />
             <Results />
           </NewsProvider>
         </div>
