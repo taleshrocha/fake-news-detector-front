@@ -2,7 +2,7 @@ import { NewsContext } from "@/contexts/NewsContext";
 import { useContext } from "react";
 
 export default function Slider() {
-  const { sliderValue, setSliderValue, algoValues, setAlgoValues } =
+  const{ newsContent, sliderValue, setSliderValue, algoValues, setAlgoValues } =
     useContext(NewsContext);
 
   return (
@@ -15,6 +15,7 @@ export default function Slider() {
         min={0}
         max={100}
         value={sliderValue}
+        disabled={newsContent.trim().split(" ").length < 8}
         onChange={(e) => setSliderValue(e.target.value)}
       />
       {/* Algorithms checkboxes */}
@@ -26,13 +27,15 @@ export default function Slider() {
           >
             <input
               className="rounded-full bg-gray-700 text-emerald-700
-              border-transparent focus:border-transparent focus:ring-0"
+              border-transparent focus:border-transparent focus:ring-0
+              disabled:text-gray-700"
               type="checkbox"
               onChange={(e) => {
                 let newValues = [...algoValues];
                 newValues[index].selected = e.target.checked;
                 setAlgoValues(newValues);
               }}
+              disabled={newsContent.trim().split(" ").length < 8}
               checked={value.selected}
             />
             <p className={`${value.selected ? "text-white" : "text-gray-500"}`}>

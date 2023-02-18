@@ -3,15 +3,28 @@ import { NewsContext } from "@/contexts/NewsContext";
 import { useContext } from "react";
 
 export default function SendButton() {
-  const { sliderValue, setTrustThreshold, setIsLoading, algoValues, setCurrentNews, newsContent, setNewsContent } = useContext(NewsContext);
-  var news = {}
+  const {
+    sliderValue,
+    setTrustThreshold,
+    setIsLoading,
+    algoValues,
+    setCurrentNews,
+    newsContent,
+    setNewsContent,
+  } = useContext(NewsContext);
+  var news = {};
+  var algos = "";
 
-  function postNews() {
+  function getAlgoResults() {
     if (newsContent.trim().split(" ").length >= 8) {
       setIsLoading(true);
       news.content = newsContent;
       setNewsContent("");
-      fetch("http://localhost:8080/news", {
+      algoValues.forEach((value) => {
+        if (value.selected) algos = algos + value.algo;
+      });
+      console.log(algos)
+      fetch(`http://localhost:8080/news/${algos}`, {
         method: "POST",
         mode: "cors",
         cache: "no-cache",
@@ -25,49 +38,17 @@ export default function SendButton() {
       })
         .then((response) => response.json())
         .then((data) => {
-          news.id = data.id
+          console.log(data)
+          news.fakeRate = data;
+          setCurrentNews(news);
+          setTrustThreshold(sliderValue);
+          setIsLoading(false);
         })
-        .then(putAlgorithms)
         .catch((error) => {
-          console.log("Error in postNews()\n", error);
+          console.log("Error in putAlgorithms()\n", error);
+          setIsLoading(false);
         });
     }
-  }
-
-  function getNews() {
-    fetch(`http://localhost:8080/news/${news.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        news.leven = data.levenRate
-        setCurrentNews(news)
-        setTrustThreshold(sliderValue)
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log("Error in getNews()\n", error);
-        setIsLoading(false);
-      })
-  }
-
-  function putAlgorithms() {
-    algoValues.forEach((value) => {
-      if (value.selected)
-        fetch(`http://localhost:8080/news/${value.algo}`, {
-          method: "PUT",
-          mode: "cors",
-          cache: "no-cache",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          redirect: "follow",
-          referrerPolicy: "no-referrer",
-        })
-        .then(getNews)
-          .catch((error) => {
-            console.log("Error in putAlgorithms()\n", error);
-          });
-    });
   }
 
   return (
@@ -83,7 +64,7 @@ export default function SendButton() {
               "!bg-gray-700 !text-gray-800 !border-gray-800 cursor-not-allowed"
             }
 `}
-        onClick={postNews}
+        onClick={getAlgoResults}
         disabled={newsContent.trim().split(" ").length < 8}
       >
         Check News <PlaneIcon />
