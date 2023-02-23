@@ -2,25 +2,53 @@ import { useRef, useState } from "react";
 import {
   AiFillEye as EyeIcon,
   AiFillQuestionCircle as QuestionIcon,
-  AiFillSetting as SettingsIcon
+  AiFillSetting as SettingsIcon,
 } from "react-icons/ai";
 import { BsGithub as GitHubIcon } from "react-icons/bs";
 import { FaFileCsv as CsvFileIcon } from "react-icons/fa";
 
 export default function NavBar() {
-
-  const [selectedCsv, setSelectedCsv] = useState(null)
-  const filePickerRef = useRef(null)
+  const [selectedCsv, setSelectedCsv] = useState(null);
+  const filePickerRef = useRef(null);
 
   function getCsv(e) {
-    const reader = new FileReader()
+    const reader = new FileReader();
     if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0])
+      reader.readAsDataURL(e.target.files[0]);
     }
     reader.onload = (readerEvent) => {
-      setSelectedCsv(readerEvent.target.result)
-    }
+      setSelectedCsv(readerEvent.target.result);
+    };
+
+    postCsv();
   }
+
+  function postCsv() {
+    var data = new FormData()
+    data.append("file", selectedCsv)
+
+    fetch(`http://localhost:8080/news/csv`, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: data,
+      form: "file=@file",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log("Error in postCsv()\n", error);
+      });
+  }
+
   return (
     <nav
       className="
@@ -36,9 +64,7 @@ export default function NavBar() {
         className="flex flex-col justify-center items-center 
         w-full space-y-4"
       >
-        <button
-          onClick={() => filePickerRef.current.click()}
-        >
+        <button onClick={() => filePickerRef.current.click()}>
           <CsvFileIcon className="nav-icon" size={100} />
           <p className="nav-p">Add CSV file</p>
         </button>

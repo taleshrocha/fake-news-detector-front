@@ -1,38 +1,134 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<a name="readme-top"></a>
+
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+
+<H3 align="center">Fake News Detector</h3>
+
+  <p align="center">
+  An application to detect Fake News.
+    <br />
+    <a href="https://github.com/taleshrocha/fake-news-detector-front/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/taleshrocha/fake-news-detector-front/issues">Request Feature</a>
+  </p>
+</div>
+
+# About The Project
+
+![](./images/front.png)
+
+This application aims to detect if a news on the web is false or not.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+- [![javascript-badge]][javascript-url]
+- [![tailwindcss-badge]][tailwindcss-url]
+- [![react-badge]][react-url]
+- [![next-badge]][next-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started
 
-First, run the development server:
+To get a local copy up and running follow these simple example steps.
 
-```bash
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/taleshrocha/fake-news-detector-front.git
+   ```
+2. Install npm packages
+   ```sh
+   npm install
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+# Usage
+
+## Up and Running
+
+Run the application in localhost with
+
+```sh
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Application
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Trust threshold
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+You can set a desirable trust threshold for your news analysis using a slider.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+![](./images/slider.gif)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## String similarity algorithm
 
-## Learn More
+You have the freedom to choose between three string similarity algorithms.
+Jaro Winkler; Levenshtein or Cosine.
 
-To learn more about Next.js, take a look at the following resources:
+![](./images/algorithm.gif)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Add CSV
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+It is possible to add a CSV file to populate the Fake News database.
 
-## Deploy on Vercel
+![](./images/csv.gif)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Acknowledgments
+
+<div align="center">
+<a href="https://github.com/taleshrocha">
+ <img style="border-radius: 50%;" src="https://github.com/taleshrocha.png" width="100px;" alt="Tales Rocha's profile photo"/>
+ <br />
+ <sub><b>Tales Rocha</b></sub></a>
+
+Done with ❤️ by Tales Rocha 👋🏽 Contact me!
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+[contributors-shield]: https://img.shields.io/github/contributors/taleshrocha/move-it.svg?style=for-the-badge
+[contributors-url]: https://github.com/taleshrocha/move-it/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/taleshrocha/move-it.svg?style=for-the-badge
+[forks-url]: https://github.com/taleshrocha/move-it/network/members
+[stars-shield]: https://img.shields.io/github/stars/taleshrocha/move-it.svg?style=for-the-badge
+[stars-url]: https://github.com/taleshrocha/move-it/stargazers
+[issues-shield]: https://img.shields.io/github/issues/taleshrocha/move-it.svg?style=for-the-badge
+[issues-url]: https://github.com/taleshrocha/move-it/issues
+[license-shield]: https://img.shields.io/github/license/taleshrocha/move-it.svg?style=for-the-badge
+[license-url]: https://github.com/taleshrocha/move-it/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/linkedin_username
+[next-badge]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logocolor=white
+[next-url]: https://nextjs.org/
+[vite-badge]: https://img.shields.io/badge/vite-20232a?style=for-the-badge&logo=vite
+[vite-url]: https://vitejs.dev/
+[react-badge]: https://img.shields.io/badge/react-20232a?style=for-the-badge&logo=react&logocolor=61dafb
+[react-url]: https://reactjs.org/
+[tailwindcss-badge]: https://img.shields.io/badge/tailwind%20css-20232A?style=for-the-badge&logo=tailwindcss
+[tailwindcss-url]: https://tailwindcss.com/
+[sanity-badge]: https://img.shields.io/badge/sanity-20232A?style=for-the-badge&logo=sanity
+[sanity-url]: https://www.sanity.io/
+[typescript-badge]: https://img.shields.io/badge/typescript-20232A?style=for-the-badge&logo=typescript
+[typescript-url]: https://www.typescriptlang.org/
+[javascript-badge]: https://img.shields.io/badge/javascript-20232A?style=for-the-badge&logo=javascript
+[javascript-url]: https://www.javascript.com/
+[firebase-badge]: https://img.shields.io/badge/firebase-20232A?style=for-the-badge&logo=firebase
+[firebase-url]: https://firebase.google.com/

@@ -39,7 +39,6 @@ export default function Results() {
                 <h1 className="font-bold">
                   Result {(currentNews.fakeRate * 100).toFixed(0)}%
                 </h1>
-              );
           <p
             className={`font-bold ${
               currentNews.fakeRate * 100 <= trustThreshold
