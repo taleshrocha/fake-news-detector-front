@@ -13,6 +13,8 @@
   <p align="center">
   An application to detect Fake News.
     <br />
+    <a href="https://github.com/taleshrocha/fake-news-detector-back">See Backend</a>
+    ·
     <a href="https://github.com/taleshrocha/fake-news-detector-front/issues">Report Bug</a>
     ·
     <a href="https://github.com/taleshrocha/fake-news-detector-front/issues">Request Feature</a>
