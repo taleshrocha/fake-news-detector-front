@@ -1,27 +1,4 @@
-<a name="readme-top"></a>
-
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-
-<H3 align="center">Fake News Detector</h3>
-
-  <p align="center">
-  An application to detect Fake News.
-    <br />
-    <a href="https://github.com/taleshrocha/fake-news-detector-back">See Backend</a>
-    ·
-    <a href="https://github.com/taleshrocha/fake-news-detector-front/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/taleshrocha/fake-news-detector-front/issues">Request Feature</a>
-  </p>
-</div>
-
-# About The Project
+# About
 
 ![](./images/front.png)
 
