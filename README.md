@@ -31,9 +31,7 @@ This application aims to detect if a news on the web is false or not.
 
 ### Built With
 
-- [![javascript-badge]][javascript-url]
 - [![tailwindcss-badge]][tailwindcss-url]
-- [![react-badge]][react-url]
 - [![next-badge]][next-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -91,18 +89,6 @@ It is possible to add a CSV file to populate the Fake News database.
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Acknowledgments
-
-<div align="center">
-<a href="https://github.com/taleshrocha">
- <img style="border-radius: 50%;" src="https://github.com/taleshrocha.png" width="100px;" alt="Tales Rocha's profile photo"/>
- <br />
- <sub><b>Tales Rocha</b></sub></a>
-
-Done with ❤️ by Tales Rocha 👋🏽 Contact me!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
